@@ -7,7 +7,7 @@ server:
     jsp:
       init-parameters:
         development: true # 开启JSP调试模式，修改JSP无需重启
-    context-path: /pms # 上下文路径
+    context-path: /git # 上下文路径
 
 # Spring MVC 配置
 spring:
