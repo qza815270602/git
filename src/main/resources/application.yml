@@ -1,0 +1,37 @@
+
+
+# 服务配置
+server:
+  port: 8080 # 服务端口
+  servlet:
+    jsp:
+      init-parameters:
+        development: true # 开启JSP调试模式，修改JSP无需重启
+    context-path: /pms # 上下文路径
+
+# Spring MVC 配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/sys?characterEncoding=UTF-8&useOldAliasMetadataBehavior=true&useSSL=false
+  mvc:
+    view:
+      prefix: /WEB-INF/page/ # 页面前缀
+      suffix: .jsp # 页面后缀
+    static-path-pattern: /static/**
+
+  mail:
+    host: smtp.163.com  //登录邮箱设置那里可以看到,第一张图所示,SMTP服务器
+    password: qza815270602 密码是第二张图设置的授权密码.不是邮箱的登录密码
+    username: qza815270602@163.com //这个是你的邮箱
+
+
+# Mybatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml # Mapper XML 扫包路径
+  type-aliases-package: com.dj.pms.pojo # 类别名
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打日志
