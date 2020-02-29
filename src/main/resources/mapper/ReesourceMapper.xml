@@ -11,11 +11,12 @@
 			a.p_id,
 			a.resource_code,
 			a.resource_type,
-			a.is_del
+			a.is_del,
+			ur.role_id
 		FROM
 			user_role ur
-		LEFT JOIN djmall_auth_role_resource arr ON ur.role_id = arr.role_id
-		LEFT JOIN djmall_auth_resource a ON arr.resource_id = a.id
+		LEFT JOIN role_resource arr ON ur.role_id = arr.role_id
+		LEFT JOIN resource a ON arr.resource_id = a.id
 		where
 			ur.user_id = #{id}  AND arr.is_del = 1
     </select>

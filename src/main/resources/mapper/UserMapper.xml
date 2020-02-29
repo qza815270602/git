@@ -20,10 +20,10 @@
         FROM
             user u
         LEFT JOIN
-            djmall_auth_user_role ur
+            user_role ur
         ON u.id = ur.user_id
         LEFT JOIN
-        djmall_auth_role r
+         role r
         ON r.id = ur.role_id
         <where>
             u.is_del = 1

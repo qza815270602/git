@@ -34,6 +34,11 @@ public class Resource {
     private Integer pId;
 
     /**
+     * 角色id
+     */
+    private Integer roleId;
+
+    /**
      * 资源编码
      */
     private String resourceCode;

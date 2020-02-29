@@ -10,7 +10,7 @@
 <body>
 			
 			
-		<h1 align="center">欢迎${user.userName}登陆北京点金教育平台,万元高薪,尽在点金</h1>
+		<h1 align="center">欢迎${user.userName}登陆玩具之家</h1>
 
 		<span><a href="<%=request.getContextPath()%>/user/esc">退出</a></span>
 	
