@@ -11,8 +11,7 @@
 			a.p_id,
 			a.resource_code,
 			a.resource_type,
-			a.is_del,
-			ur.role_id
+			a.is_del
 		FROM
 			user_role ur
 		LEFT JOIN role_resource arr ON ur.role_id = arr.role_id

@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <html>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/layer/layer.js"></script>
@@ -42,7 +43,9 @@
                     html += "<td>"+list.projectShow+"</td>";
                     html += "<td>"+list.statusShow+"</td>";
                     html += "<td>";
+                    <shiro:hasPermission name="maintain:cz">
                     html += "<input type = 'button' value = '审核' onclick = 'updateById("+list.id+")'>";
+                    </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
                 }
@@ -157,6 +160,7 @@
 </script>
 <body>
 <form id="fm">
+    <div align="center">
 <shiro:hasPermission name="maintain:find">
     状态<select name="status">
             <option value="0">--请选择--</option>
@@ -166,6 +170,7 @@
         </select><br>
     <input type="button" value="搜索" onclick="show()">
 </shiro:hasPermission>
+    </div>
 </form>
 <shiro:hasPermission name="maintain:update">
     <input type="button" value="修改" onclick="updateById()">&nbsp;
@@ -188,9 +193,9 @@
             <th style="background: aquamarine;">预约单号</th>
             <th style="background: aquamarine;">维修项目</th>
             <th style="background: aquamarine;">状态</th>
-            <c:if test="#{resource.roleId == 3}">
+            <shiro:hasPermission name="maintain:cz">
                 <th style="background: aquamarine;">操作</th>
-            </c:if>
+            </shiro:hasPermission>
         </tr>
         </thead>
         <tbody id = "tbd">

@@ -2,14 +2,8 @@ package com.dj.pms.controller.page;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dj.pms.common.SystemConstant;
-import com.dj.pms.pojo.Maintain;
-import com.dj.pms.pojo.Role;
-import com.dj.pms.pojo.User;
-import com.dj.pms.pojo.UserRole;
-import com.dj.pms.service.MaintainService;
-import com.dj.pms.service.RoleService;
-import com.dj.pms.service.UserRoleService;
-import com.dj.pms.service.UserService;
+import com.dj.pms.pojo.*;
+import com.dj.pms.service.*;
 import com.dj.pms.utils.PasswordSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +21,8 @@ public class MaintainPageController {
     @Autowired
     private MaintainService maintainService;
 
+    @Autowired
+    private BasicDataService basicDataService;
 
     /**
      *  去展示
@@ -59,7 +55,11 @@ public class MaintainPageController {
         QueryWrapper<Maintain> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         Maintain maintain = maintainService.getOne(queryWrapper);
+        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("p_id", SystemConstant.ONE);
+        BasicData basicData = basicDataService.getOne(queryWrapper1);
         model.addAttribute("maintain", maintain);
+        model.addAttribute("basicData", basicData);
         return "user/update";
     }
 
