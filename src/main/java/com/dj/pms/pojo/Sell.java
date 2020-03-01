@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@TableName("basic_data")
+@TableName("sell")
 public class Sell {
 
     /**
@@ -20,7 +20,7 @@ public class Sell {
     /**
      * 项目名称
      */
-    private String baseName;
+    private String sellName;
 
     /**
      * 是否删除 1正常 0删除
@@ -28,8 +28,24 @@ public class Sell {
     private Integer isDel;
 
     /**
-     * 父级id
+     * 头像
      */
-    private Integer pId;
+    private String img;
+
+    /**
+     *价格
+     */
+    private Double sellPrice;
+
+    /**
+     * 颜色
+     */
+    private String colour;
+
+    /**
+     * 维修项目
+     */
+    private Integer maintainProject;
+
 
 }
