@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface SellService extends IService<Sell> {
 
-    List<Sell> findAllSell(Sell sell) throws Exception;
+    List<Sell> findAllSell(Integer isDel) throws Exception;
 
     void addSell(Sell sell) throws Exception;
+
+    void updateStatus(Integer id, Integer isDel) throws Exception;
 }

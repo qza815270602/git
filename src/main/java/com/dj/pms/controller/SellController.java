@@ -28,9 +28,9 @@ public class SellController {
      * 展示
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(Sell sell) {
+    public ResultModel<Object> show(Integer isDel) {
         try {
-            List<Sell> sellList = sellService.findAllSell(sell);
+            List<Sell> sellList = sellService.findAllSell(isDel);
             return new ResultModel<>().success(sellList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,20 +82,34 @@ public class SellController {
         }
     }
 
-//    /**
-//     * 修改
-//     */
-//    @RequestMapping("update")
-//    public ResultModel<Object> update(Maintain maintain) {
-//        try {
-//            sellService.updateMaintain(maintain);
-//            return new ResultModel<>().success(SystemConstant.SUCCESS);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
-//        }
-//    }
-//
+    /**
+     * 购买
+     */
+    @RequestMapping("addById")
+    public ResultModel<Object> addById(Integer id) {
+        try {
+            sellService.addSell(sell);
+            return new ResultModel<>().success(SystemConstant.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
+        }
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping("updateStatus")
+    public ResultModel<Object> updateStatus(Integer id ,Integer isDel) {
+        try {
+            sellService.updateStatus(id, isDel);
+            return new ResultModel<>().success(SystemConstant.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
+        }
+    }
+
 //    /**
 //     * 删除
 //     */

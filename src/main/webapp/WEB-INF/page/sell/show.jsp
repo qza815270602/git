@@ -36,6 +36,7 @@
                     html += "<tr>";
                     html += "<td>";
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
+                    html += "<input type = 'hidden' id = '"+list.id+"' value = '"+list.isDel+"'/>"
                     html += "</td>";
                     html += "<td>"+list.id+"</td>";
                     html += "<td>"+list.sellName+"</td>";
@@ -45,9 +46,10 @@
                     html += "<td>"+list.sellPrice+"</td>";
                     html += "<td>"+list.colour+"</td>";
                     html += "<td>"+list.projectShow+"</td>";
+                    html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>"
                     html += "<td>";
 <%--                    <shiro:hasPermission name="maintain:cz">--%>
-                    html += "<input type = 'button' value = '审核' onclick = 'updateById("+list.id+")'>";
+                    html += "<input type = 'button' value = '购买' onclick = 'addById("+list.id+")'>";
 <%--                    </shiro:hasPermission>--%>
                     html += "</td>";
                     html += "</tr>";
@@ -56,57 +58,76 @@
         })
     }
 
-
-
-    //去修改
-    function updateById(id){
-            layer.open({
-                type: 2,
-                title: '修改页面',
-                shadeClose: true,
-                shade: 0.8,
-                area: ['380px', '90%'],
-                content: '<%=request.getContextPath()%>/maintain/toUpdate/'+id
-            });
-
-    }
-
-
-
-
-    //删除
-    function del(){
-        var length = $("input[name='id']:checked").length;
-
-        if(length <= 0){
-            layer.msg("至少选择一项", {icon: 5});
+    //上/下架
+    function updateStatus(){
+        var len = $("input[name='id']:checked").length;
+        if(len <= 0){
+            layer.msg("请选择一项", {icon: 0});
             return;
         }
-        if(length > 1){
-            layer.msg("只能选择一个", {icon: 5});
+        if(len > 1){
+            layer.msg("只能选择一项", {icon: 0});
             return;
         }
-
-        var id = $("input[name='id']:checked").val();
-        layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
+        //id
+        var id = "";
+        $("input[name='id']:checked").each(function (index, item) {
+            if ($("input[name='id']:checked").length-1==index) {
+                id += $(this).val();
+            }
+        });
+        //上线时间
+        var data = $("#"+id+"s").val();
+        //状态 = # + 状态ID.value
+        var sta = $("#"+id).val();
+        //设置全局变量,往后台传值1/2
+        var statu;
+        var msg1 = "您确定要设置为";
+        if(sta == 1){
+            msg1 += "下架吗？";
+            statu = 0;
+        } else {
+            msg1 += "上架吗？";
+            statu = 1;
+        }
+        layer.confirm(msg1, {icon: 3, title:'提示'}, function(index){
             //do something
-
-            layer.close(index);
-
-            $.post("<%=request.getContextPath()%>/maintain/del ",
-                {"id":id, "isDel":0},
+            $.post("<%=request.getContextPath()%>/sell/updateStatus",
+                {"id":id,"isDel":statu},
                 function(data){
-                    layer.close(index);
                     if (data.code == -1){
                         layer.msg(data.msg, {icon: 5});
                         return;
                     }
-                    window.location.href="<%=request.getContextPath()%>/maintain/toShow";
+                    layer.msg(data.msg, {
+                        icon: 6,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        show();
+                    });
                 });
+
+            layer.close(index);
         });
     }
 
 
+
+    //去修改
+    function addById(id){
+        $.post("<%=request.getContextPath()%>/sell/addById?id="+id,
+            {},
+            function(data){
+                if (data.code == -1){
+                    layer.msg(data.msg, {icon: 5});
+                    return;
+                }
+                layer.msg("购买成功", {icon: 6});
+                show();
+
+            });
+
+    }
 
     //去修改
     function add(){
@@ -125,11 +146,10 @@
 <form id="fm">
     <div align="center">
 
-    状态<select name="status">
-            <option value="0">--请选择--</option>
-            <option value="2">已预约</option>
-            <option value="3">已审核</option>
-            <option value="4">维修完成</option>
+    状态<select name="isDel">
+            <option value="2">--请选择--</option>
+            <option value="1">已上架</option>
+            <option value="0">已下架</option>
         </select><br>
     <input type="button" value="搜索" onclick="show()">
 
@@ -137,7 +157,7 @@
              <input type="button" value="新增玩具信息" onclick="add()">
         </shiro:hasPermission>
 <shiro:hasPermission name="sell:del">
-        <input type="button" value="删除" onclick="del()">
+    <input type="button" value="上/下架" onclick="updateStatus()" />
 </shiro:hasPermission>
     </div>
 </form>
@@ -157,6 +177,7 @@
             <th style="background: aquamarine;">价格</th>
             <th style="background: aquamarine;">颜色</th>
             <th style="background: aquamarine;">玩具类型</th>
+            <th style="background: aquamarine;">状态</th>
 <%--            <shiro:hasPermission name="sell:cz">--%>
                 <th style="background: aquamarine;">操作</th>
 <%--            </shiro:hasPermission>--%>

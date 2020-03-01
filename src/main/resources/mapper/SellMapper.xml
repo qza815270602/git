@@ -17,6 +17,11 @@
             sell s
         LEFT JOIN basic_data b ON s.maintain_project = b.id
         WHERE b.is_del = 1
+        <if test="isDel != null and isDel != 2">
+            and s.is_del = #{isDel}
+        </if>
+        ORDER BY s.id DESC
+
 
     </select>
 </mapper>
