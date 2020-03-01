@@ -39,7 +39,9 @@
                     html += "</td>";
                     html += "<td>"+list.id+"</td>";
                     html += "<td>"+list.sellName+"</td>";
-                    html += "<td>"+list.img+"</td>";
+                    html += "<td>";
+                    html += "<img src='http://q3ty2qnj5.bkt.clouddn.com/"+list.img+"' width='100px' height='100px'>";
+                    html += "</td>";
                     html += "<td>"+list.sellPrice+"</td>";
                     html += "<td>"+list.colour+"</td>";
                     html += "<td>"+list.projectShow+"</td>";
@@ -122,7 +124,7 @@
 <body>
 <form id="fm">
     <div align="center">
-<shiro:hasPermission name="sell:find">
+
     状态<select name="status">
             <option value="0">--请选择--</option>
             <option value="2">已预约</option>
@@ -130,7 +132,7 @@
             <option value="4">维修完成</option>
         </select><br>
     <input type="button" value="搜索" onclick="show()">
-</shiro:hasPermission>
+
         <shiro:hasPermission name="sell:add">
              <input type="button" value="新增玩具信息" onclick="add()">
         </shiro:hasPermission>

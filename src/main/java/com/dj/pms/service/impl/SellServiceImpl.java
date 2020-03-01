@@ -24,4 +24,9 @@ public class SellServiceImpl extends ServiceImpl<SellMapper, Sell> implements Se
     public List<Sell> findAllSell(Sell sell) throws Exception {
         return sellMapper.findAllSell(sell);
     }
+
+    @Override
+    public void addSell(Sell sell) throws Exception {
+        this.save(sell);
+    }
 }

@@ -19,7 +19,7 @@ public class Sell {
     private Integer id;
 
     /**
-     * 项目名称
+     * 名称
      */
     private String sellName;
 
