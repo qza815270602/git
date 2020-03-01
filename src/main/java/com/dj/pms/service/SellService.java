@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface SellService extends IService<Sell> {
 
-    List<Maintain> findAllMaintain(Integer status) throws Exception;
+    List<Sell> findAllSell(Sell sell) throws Exception;
 }

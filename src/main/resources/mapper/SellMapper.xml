@@ -3,5 +3,20 @@
 <mapper namespace="com.dj.pms.mapper.SellMapper">
 
 
+    <select id="findAllSell" resultType="com.dj.pms.pojo.Sell">
+        SELECT
+            s.id,
+            s.sell_name,
+            s.img,
+            s.sell_price,
+            s.colour,
+            s.maintain_project,
+            s.is_del,
+            b.base_name AS projectShow
+        FROM
+            sell s
+        LEFT JOIN basic_data b ON s.maintain_project = b.id
+        WHERE b.is_del = 1
 
+    </select>
 </mapper>

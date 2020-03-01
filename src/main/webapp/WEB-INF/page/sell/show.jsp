@@ -23,7 +23,7 @@
     })
 
     function show(){
-        $.post("<%=request.getContextPath()%>/maintain/show",
+        $.post("<%=request.getContextPath()%>/sell/show",
             $("#fm").serialize(),
             function (data) {
                 if (data.code != 200){
@@ -38,14 +38,15 @@
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
                     html += "</td>";
                     html += "<td>"+list.id+"</td>";
-                    html += "<td>"+list.maintainTime+"</td>";
-                    html += "<td>"+list.maintainId+"</td>";
+                    html += "<td>"+list.sellName+"</td>";
+                    html += "<td>"+list.img+"</td>";
+                    html += "<td>"+list.sellPrice+"</td>";
+                    html += "<td>"+list.colour+"</td>";
                     html += "<td>"+list.projectShow+"</td>";
-                    html += "<td>"+list.statusShow+"</td>";
                     html += "<td>";
-                    <shiro:hasPermission name="maintain:cz">
+<%--                    <shiro:hasPermission name="maintain:cz">--%>
                     html += "<input type = 'button' value = '审核' onclick = 'updateById("+list.id+")'>";
-                    </shiro:hasPermission>
+<%--                    </shiro:hasPermission>--%>
                     html += "</td>";
                     html += "</tr>";
                 }
@@ -113,7 +114,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 area: ['380px', '90%'],
-                content: '<%=request.getContextPath()%>/maintain/toAdd'
+                content: '<%=request.getContextPath()%>/sell/toAdd'
             });
     }
 
@@ -121,7 +122,7 @@
 <body>
 <form id="fm">
     <div align="center">
-<shiro:hasPermission name="maintain:find">
+<shiro:hasPermission name="sell:find">
     状态<select name="status">
             <option value="0">--请选择--</option>
             <option value="2">已预约</option>
@@ -130,10 +131,10 @@
         </select><br>
     <input type="button" value="搜索" onclick="show()">
 </shiro:hasPermission>
-        <shiro:hasPermission name="maintain:add">
-             <input type="button" value="填写维修单" onclick="add()">
+        <shiro:hasPermission name="sell:add">
+             <input type="button" value="新增玩具信息" onclick="add()">
         </shiro:hasPermission>
-<shiro:hasPermission name="maintain:del">
+<shiro:hasPermission name="sell:del">
         <input type="button" value="删除" onclick="del()">
 </shiro:hasPermission>
     </div>
@@ -148,14 +149,15 @@
         <thead>
         <tr>
             <th style="background: aquamarine;"></th>
-            <th style="background: aquamarine;">预约编号</th>
-            <th style="background: aquamarine;">预约时间</th>
-            <th style="background: aquamarine;">预约单号</th>
-            <th style="background: aquamarine;">维修项目</th>
-            <th style="background: aquamarine;">状态</th>
-            <shiro:hasPermission name="maintain:cz">
+            <th style="background: aquamarine;">编号</th>
+            <th style="background: aquamarine;">名称</th>
+            <th style="background: aquamarine;">玩具示例</th>
+            <th style="background: aquamarine;">价格</th>
+            <th style="background: aquamarine;">颜色</th>
+            <th style="background: aquamarine;">玩具类型</th>
+<%--            <shiro:hasPermission name="sell:cz">--%>
                 <th style="background: aquamarine;">操作</th>
-            </shiro:hasPermission>
+<%--            </shiro:hasPermission>--%>
         </tr>
         </thead>
         <tbody id = "tbd">
