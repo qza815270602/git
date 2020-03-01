@@ -9,6 +9,7 @@ import com.dj.pms.pojo.Role;
 import com.dj.pms.pojo.RoleResource;
 import com.dj.pms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,9 +43,12 @@ public class MaintainController {
      * 注册
      */
     @RequestMapping("add")
-    public ResultModel<Object> add(Role role) {
+    public ResultModel<Object> add(Maintain maintain) {
         try {
-//            roleService.addRole(role);
+            if (maintain.getMaintainTime() == null || maintain.getMaintainProject() == null) {
+                return new ResultModel<>().error(SystemConstant.NOT_NULL);
+            }
+            maintainService.addMaintain(maintain);
             return new ResultModel<>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,9 +74,9 @@ public class MaintainController {
      * 删除
      */
     @RequestMapping("del")
-    public ResultModel<Object> del(Role role) {
+    public ResultModel<Object> del(Integer id, Integer isDel) {
         try {
-//            roleService.delRoleAndUserRoleAndRoleResource(role);
+            maintainService.delMaintain(id, isDel);
             return new ResultModel<>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

@@ -36,7 +36,12 @@ public class MaintainPageController {
      *  去注册
      */
     @RequestMapping("toAdd")
-    public String toAdd()  {
+    public String toAdd(Model model){
+        QueryWrapper<BasicData> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_del", SystemConstant.IS_DEL_ONE);
+        queryWrapper.eq("p_id", 5);
+        List<BasicData> basicDataList = basicDataService.list(queryWrapper);
+        model.addAttribute("basicDataList", basicDataList);
         return "maintain/add";
     }
 

@@ -4,6 +4,7 @@ package com.dj.pms.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.dj.pms.common.SystemConstant;
 import com.dj.pms.mapper.MaintainMapper;
 
 import com.dj.pms.pojo.Maintain;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,5 +42,19 @@ public class MaintainServiceImpl extends ServiceImpl<MaintainMapper, Maintain> i
         this.update(updateWrapper);
     }
 
+    @Override
+    public void addMaintain(Maintain maintain) throws Exception {
+        maintain.setMaintainId(SystemConstant.NUM_DJ + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())
+                + "♦");
+        this.save(maintain);
+    }
+
+    @Override
+    public void delMaintain(Integer id, Integer isDel) throws Exception {
+        UpdateWrapper<Maintain> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set("is_del", isDel);
+        updateWrapper.eq("id", id);
+        this.update(updateWrapper);
+    }
 
 }

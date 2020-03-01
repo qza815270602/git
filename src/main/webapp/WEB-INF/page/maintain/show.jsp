@@ -56,24 +56,7 @@
 
 
     //去修改
-    function updateById(){
-        var length = $("input[name='id']:checked").length;
-
-        if(length <= 0){
-            layer.msg("至少选择一项", {icon: 5});
-            return;
-        }
-        if(length > 1){
-            layer.msg("只能选择一个", {icon: 5});
-            return;
-        }
-
-        var id = $("input[name='id']:checked").val();
-        layer.confirm('确定修改吗?', {icon: 3, title:'提示'}, function(index){
-            //do something
-
-            layer.close(index);
-
+    function updateById(id){
             layer.open({
                 type: 2,
                 title: '修改页面',
@@ -82,7 +65,7 @@
                 area: ['380px', '90%'],
                 content: '<%=request.getContextPath()%>/maintain/toUpdate/'+id
             });
-        });
+
     }
 
 
@@ -147,15 +130,14 @@
         </select><br>
     <input type="button" value="搜索" onclick="show()">
 </shiro:hasPermission>
-        <input type="button" value="填写维修单" onclick="add()">
+        <shiro:hasPermission name="maintain:add">
+             <input type="button" value="填写维修单" onclick="add()">
+        </shiro:hasPermission>
+<shiro:hasPermission name="maintain:del">
+        <input type="button" value="删除" onclick="del()">
+</shiro:hasPermission>
     </div>
 </form>
-<shiro:hasPermission name="maintain:update">
-    <input type="button" value="修改" onclick="updateById()">&nbsp;
-</shiro:hasPermission>
-<shiro:hasPermission name="maintain:del">
-    <input type="button" value="删除" onclick = 'delByIds()'>&nbsp;
-</shiro:hasPermission>
     <table  class="layui-table">
         <colgroup>
             <col width="100">
