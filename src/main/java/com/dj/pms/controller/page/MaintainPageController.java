@@ -36,15 +36,8 @@ public class MaintainPageController {
      *  去注册
      */
     @RequestMapping("toAdd")
-    public String toAdd(Model model) throws Exception {
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_del", SystemConstant.IS_DEL_ONE);
-//        List<Role> roleList = roleService.list(queryWrapper);
-//        model.addAttribute("roleList", roleList);
-        //获取盐到前台进行加密
-        String salt = PasswordSecurityUtil.generateSalt();
-        model.addAttribute("salt", salt);
-        return "user/add";
+    public String toAdd()  {
+        return "maintain/add";
     }
 
     /**
@@ -55,12 +48,12 @@ public class MaintainPageController {
         QueryWrapper<Maintain> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         Maintain maintain = maintainService.getOne(queryWrapper);
-        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("p_id", SystemConstant.ONE);
-        BasicData basicData = basicDataService.getOne(queryWrapper1);
+//        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
+//        queryWrapper1.eq("p_id", 5);
+        List<BasicData> basicDataList = basicDataService.list();
         model.addAttribute("maintain", maintain);
-        model.addAttribute("basicData", basicData);
-        return "user/update";
+        model.addAttribute("basicData", basicDataList);
+        return "maintain/update";
     }
 
 

@@ -10,4 +10,7 @@ import java.util.zip.DataFormatException;
 public interface MaintainMapper extends BaseMapper<Maintain> {
 
     List<Maintain> findAllMaintain(Integer status) throws DataFormatException;
+
+
+
 }

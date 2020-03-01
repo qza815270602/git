@@ -1,19 +1,15 @@
 package com.dj.pms.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dj.pms.common.SystemConstant;
+
 import com.dj.pms.mapper.MaintainMapper;
-import com.dj.pms.mapper.RoleMapper;
+
 import com.dj.pms.pojo.Maintain;
-import com.dj.pms.pojo.Role;
-import com.dj.pms.pojo.RoleResource;
-import com.dj.pms.pojo.UserRole;
+
 import com.dj.pms.service.MaintainService;
-import com.dj.pms.service.RoleResourceService;
-import com.dj.pms.service.RoleService;
-import com.dj.pms.service.UserRoleService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,4 +30,14 @@ public class MaintainServiceImpl extends ServiceImpl<MaintainMapper, Maintain> i
     public List<Maintain> findAllMaintain(Integer status) throws Exception {
         return maintainMapper.findAllMaintain(status);
     }
+
+    @Override
+    public void updateMaintain(Maintain maintain) throws Exception {
+        UpdateWrapper<Maintain> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set("status", maintain.getStatus());
+        updateWrapper.eq("id", maintain.getId());
+        this.update(updateWrapper);
+    }
+
+
 }

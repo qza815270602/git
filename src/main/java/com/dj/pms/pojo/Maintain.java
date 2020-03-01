@@ -1,6 +1,7 @@
 package com.dj.pms.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,6 +10,7 @@ import lombok.experimental.Accessors;
 import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -42,6 +44,7 @@ public class Maintain {
     /**
      * 维修项目
      */
+    @TableField(exist = false)//表示该属性不为数据库表字段，但又是必须使用的。
     private String projectShow;
 
     /**处理状态 1 已预约  2已审核 3维修完成
@@ -52,11 +55,28 @@ public class Maintain {
     /**处理状态 1 已预约  2已审核 3维修完成
      *
      */
+    @TableField(exist = false)//表示该属性不为数据库表字段，但又是必须使用的。
     private String statusShow;
 
     /**
      * 是否删除 1正常 0删除
      */
     private Integer isDel;
+    /*
+     * 上线时间转换展示在修改页面
+     */
+    @TableField(exist = false)//表示该属性不为数据库表字段，但又是必须使用的。
+    private String maintainTimeShow;
+
+    public String getMaintainTimeShow() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        return maintainTime == null ? "" : dateFormat.format(maintainTime);
+    }
+
+    public void setMaintainTimeShow(String maintainTimeShow) {
+        this.maintainTimeShow = maintainTimeShow;
+    }
 
 }

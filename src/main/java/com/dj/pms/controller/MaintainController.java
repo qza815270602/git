@@ -56,9 +56,9 @@ public class MaintainController {
      * 修改
      */
     @RequestMapping("update")
-    public ResultModel<Object> update(Role role) {
+    public ResultModel<Object> update(Maintain maintain) {
         try {
-//            roleService.updateRole(role);
+            maintainService.updateMaintain(maintain);
             return new ResultModel<>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

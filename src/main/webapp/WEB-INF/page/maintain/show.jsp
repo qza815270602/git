@@ -120,41 +120,18 @@
         });
     }
 
-    //批量刪除
-    function delByIds(){
-        var length = $("input[name='id']:checked").length;
-        if(length <= 0){
-            layer.msg('请至少选择一个!', {icon:0});
-            return;
-        }
-        var str = "";
-        $("input[name='id']:checked").each(function (index, item) {
-            if ($("input[name='id']:checked").length-1==index) {
-                str += $(this).val();
-            } else {
-                str += $(this).val() + ",";
-            }
-        });
-        var id = $("input[name='id']:checked").val();
-        layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
-            var index = layer.load(1,{shade:0.5});
-            $.post("<%=request.getContextPath()%>/maintain/delByIds",
-                {"ids":str,"isDel": 0},
-                function(data){
-                    if(data.code == 200){
-                        layer.msg(data.msg, {
-                            icon: 6,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function(){
-                            window.location.href = "<%=request.getContextPath()%>/maintain/toShow";
-                        });
-                        return;
-                    }
-                    layer.msg(data.msg, {icon:5});
-                    layer.close(index);
-                });
-        });
-        layer.close(index);
+
+
+    //去修改
+    function add(){
+            layer.open({
+                type: 2,
+                title: '修改页面',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['380px', '90%'],
+                content: '<%=request.getContextPath()%>/maintain/toAdd'
+            });
     }
 
 </script>
@@ -170,6 +147,7 @@
         </select><br>
     <input type="button" value="搜索" onclick="show()">
 </shiro:hasPermission>
+        <input type="button" value="填写维修单" onclick="add()">
     </div>
 </form>
 <shiro:hasPermission name="maintain:update">

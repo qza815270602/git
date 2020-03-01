@@ -26,8 +26,5 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)//碰到异常做回滚
 public class BasicDataServiceImpl extends ServiceImpl<BasicDataMapper, BasicData> implements BasicDataService {
 
-    @Autowired
-    private BasicDataService basicDataService;
-
 
 }
