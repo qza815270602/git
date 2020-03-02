@@ -36,7 +36,7 @@
                     html += "<tr>";
                     html += "<td>"+list.sellName+"</td>";
                     html += "<td>";
-                    html += "<img src='http://q3ty2qnj5.bkt.clouddn.com/"+list.img+"' width='100px' height='100px'>";
+                    html += "<img src='"+list.img+"' width='100px' height='100px'>";
                     html += "</td>";
                     html += "<td>"+list.sellPrice+"</td>";
                     html += "<td>"+list.colour+"</td>";

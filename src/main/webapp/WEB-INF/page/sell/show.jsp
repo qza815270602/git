@@ -41,7 +41,7 @@
                     html += "<td>"+list.id+"</td>";
                     html += "<td>"+list.sellName+"</td>";
                     html += "<td>";
-                    html += "<img src='http://q3ty2qnj5.bkt.clouddn.com/"+list.img+"' width='100px' height='100px'>";
+                    html += "<img src='"+list.img+"' width='100px' height='100px'>";
                     html += "</td>";
                     html += "<td>"+list.sellPrice+"</td>";
                     html += "<td>"+list.colour+"</td>";
@@ -158,6 +158,9 @@
         </shiro:hasPermission>
 <shiro:hasPermission name="sell:del">
     <input type="button" value="上/下架" onclick="updateStatus()" />
+</shiro:hasPermission>
+        <shiro:hasPermission name="sell:update">
+    <input type="button" value="修改" onclick="update()" />
 </shiro:hasPermission>
     </div>
 </form>

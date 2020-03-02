@@ -11,6 +11,7 @@ import com.dj.pms.service.MaintainService;
 import com.dj.pms.service.SellService;
 import com.dj.pms.service.SellUserService;
 import com.dj.pms.service.UserRoleService;
+import com.dj.pms.utils.QiNiuYunUtil;
 import com.dj.pms.utils.QiniuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -75,14 +76,10 @@ public class SellController {
                     || StringUtils.isEmpty(sell.getSellPrice())) {
                 return new ResultModel<>().error(SystemConstant.NOT_NULL);
             }
-            String fileName = UUID.randomUUID().toString().replace("-", "")
-                    + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-            //通过inputStream上传文件
-            InputStream inputStream = file.getInputStream();
-            //调用七牛云工具类中的上传方法
-            QiniuUtil.uploadByInputStream(inputStream, fileName);
+
+            // 将上传图片 的 参数 和 名字 传给 upload 方法
             //将图片信息保存到数据库中
-            sell.setImg(fileName);
+            sell.setImg(QiNiuYunUtil.upload(file));
             sellService.save(sell);
             return new ResultModel<Object>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {

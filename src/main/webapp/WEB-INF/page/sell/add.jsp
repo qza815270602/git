@@ -39,20 +39,21 @@
 
 
             function add() {
-                var file = $('#file')[0].files[0];
-                var formData = new FormData();
-                formData.append("file", $("#file").val());
-                formData.append("sellName", $("#sellName").val());
-                formData.append("sellPrice", $("#sellPrice").val());
-                formData.append("colour", $("#colour").val());
-                formData.append("maintainProject", $("#maintainProject").val());
-                formData.append("isDel", $("#isDel").val());
+                // var file = $('#file')[0].files[0];
+                var formData = new FormData($('#fm')[0]);
+                // formData.append("file", $("#file").val());
+                // formData.append("sellName", $("#sellName").val());
+                // formData.append("sellPrice", $("#sellPrice").val());
+                // formData.append("colour", $("#colour").val());
+                // formData.append("maintainProject", $("#maintainProject").val());
+                // formData.append("isDel", $("#isDel").val());
                 var index = layer.load(1,{shade:0.3});
                 $.ajax({
                     url:'<%= request.getContextPath() %>/sell/updateImg',
                     dataType:'json',
                     type:'POST',
                     data: formData,
+                    cache:false,
                     processData : false, // 使数据不做处理
                     contentType : false, // 不要设置Content-Type请求头信息
                     success: function(data){
