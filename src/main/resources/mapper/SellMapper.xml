@@ -24,4 +24,27 @@
 
 
     </select>
+    <select id="findAllSellUser" resultType="com.dj.pms.pojo.Sell">
+        SELECT
+            s.id,
+            s.sell_name,
+            s.img,
+            s.sell_price,
+            s.colour,
+            s.maintain_project,
+            s.is_del,
+            b.base_name AS projectShow
+        FROM
+            sell_user su
+        LEFT JOIN sell s ON su.sell_id = s.id
+        LEFT JOIN basic_data b ON s.maintain_project = b.id
+        <where>
+            su.is_del = 1
+            <if test="roleId == 1">
+              and su.user_id = #{userId}
+            </if>
+        </where>
+
+
+    </select>
 </mapper>

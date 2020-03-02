@@ -15,7 +15,7 @@ public class SellUser {
     /**
      * userid
      */
-    private Integer userd;
+    private Integer userId;
 
     /**
      * sellid

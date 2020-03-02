@@ -109,7 +109,7 @@
     function add(){
             layer.open({
                 type: 2,
-                title: '修改页面',
+                title: '填写页面',
                 shadeClose: true,
                 shade: 0.8,
                 area: ['380px', '90%'],

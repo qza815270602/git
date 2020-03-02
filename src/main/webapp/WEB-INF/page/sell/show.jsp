@@ -48,9 +48,9 @@
                     html += "<td>"+list.projectShow+"</td>";
                     html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>"
                     html += "<td>";
-<%--                    <shiro:hasPermission name="maintain:cz">--%>
-                    html += "<input type = 'button' value = '购买' onclick = 'addById("+list.id+")'>";
-<%--                    </shiro:hasPermission>--%>
+                    <shiro:hasPermission name="sell:gm">
+                    html += list.isDel == 1?"<input type = 'button' value = '购买' onclick = 'addById("+list.id+")'>":"❤已下架❤";
+                   </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
                 }
@@ -178,9 +178,9 @@
             <th style="background: aquamarine;">颜色</th>
             <th style="background: aquamarine;">玩具类型</th>
             <th style="background: aquamarine;">状态</th>
-<%--            <shiro:hasPermission name="sell:cz">--%>
+            <shiro:hasPermission name="sell:gm">
                 <th style="background: aquamarine;">操作</th>
-<%--            </shiro:hasPermission>--%>
+           </shiro:hasPermission>
         </tr>
         </thead>
         <tbody id = "tbd">

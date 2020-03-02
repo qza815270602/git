@@ -7,13 +7,16 @@ import com.dj.pms.mapper.BasicDataMapper;
 import com.dj.pms.mapper.SellMapper;
 import com.dj.pms.pojo.BasicData;
 import com.dj.pms.pojo.Sell;
+import com.dj.pms.pojo.SellUser;
 import com.dj.pms.pojo.User;
 import com.dj.pms.service.BasicDataService;
 import com.dj.pms.service.SellService;
+import com.dj.pms.service.SellUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -22,6 +25,9 @@ public class SellServiceImpl extends ServiceImpl<SellMapper, Sell> implements Se
 
     @Autowired
     private SellMapper sellMapper;
+
+    @Autowired
+    private SellUserService sellUserService;
 
     @Override
     public List<Sell> findAllSell(Integer isDel) throws Exception {
@@ -39,5 +45,18 @@ public class SellServiceImpl extends ServiceImpl<SellMapper, Sell> implements Se
         updateWrapper.set("is_del", isDel);
         updateWrapper.in("id", id);
         this.update(updateWrapper);
+    }
+
+    @Override
+    public List<Sell> findAllSellUser(Integer userId, Integer roleId) throws Exception {
+        return sellMapper.findAllSellUser(userId, roleId);
+    }
+
+    @Override
+    public void updateById(Integer id) throws Exception {
+        UpdateWrapper<SellUser> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set("is_del", SystemConstant.IS_DEL_ZERO);
+        updateWrapper.eq("sell_id", id);
+        sellUserService.update(updateWrapper);
     }
 }

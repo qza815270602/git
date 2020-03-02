@@ -34,6 +34,14 @@ public class SellPageController {
     }
 
     /**
+     *  去展示
+     */
+    @RequestMapping("toSellUser")
+    public String toSellUser() {
+        return "sell/sell_user";
+    }
+
+    /**
      *  去注册
      */
     @RequestMapping("toAdd")
