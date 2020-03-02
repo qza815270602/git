@@ -19,26 +19,33 @@
 
         //修改
        function update() {
-           var index = layer.load(1, {shade: 0.3}, {shadeClose: true}); //解决网络延迟的加载重复操作问题
-           layer.msg('请稍等', {
-               icon: 1,
-               time: 2000, //2秒关闭（如果不配置，默认是3秒）
-               shade: [0.8, '#393D49']
-           }, function () {
-               //do something
+            var formData = new FormData($('#fm')[0]);
+            var index = layer.load(1,{shade:0.3});
+            $.ajax({
+                url:'<%= request.getContextPath() %>/sell/updateImg',
+                dataType:'json',
+                type:'POST',
+                data: formData,
+                cache:false,
+                processData : false, // 使数据不做处理
+                contentType : false, // 不要设置Content-Type请求头信息
+                success: function(data){
+                    if (data.code != 200) {
+                        layer.msg(data.msg);
+                        layer.close(index);
+                        return;
+                    }
+                    layer.msg(data.msg,function () {
+                        layer.close(index);
+                        layer.msg(data.msg);
+                        parent.window.location.href = "<%=request.getContextPath()%>/sell/toShow";
+                    });
+                }
+            });
 
-               $.post("<%=request.getContextPath()%>/maintain/update ",
-                   $("#fm").serialize(),
-                   function (data) {
-                       layer.close(index);
-                       if (data.code == -1) {
-                           layer.msg(data.msg, {icon: 5});
-                           return;
-                       }
-                       parent.window.location.href = "<%=request.getContextPath()%>/maintain/toShow";
-                   });
-           });
-       }
+        }
+
+
 
     </script>
     <style>
@@ -49,21 +56,17 @@
 </head>
 <body>
 <form id="fm">
-    编号 ${maintain.maintainId} <br>
-    填写维修时间${maintain.maintainTimeShow} <br>
+    名称<input type="text" name="sellName" value="${sell.sellName}">  <br>
+    玩具示例图<img src='${sell.img}' width='100px' height='100px'> <br>
+    更换图片<input type="file" name="file" id="file"/><br>
+    <input type="hidden" name="img" value="${sell.img}">
+    价格<input type="text" name="sellPrice" value="${sell.sellPrice}"  onkeyup="if(!this.value.match(/^\+?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:\+?\d+(?:\.\d+)?)?$/))this.o_value=this.value" maxlength="8" oninput = "value=value.replace(/[^\d.]/g,'')" width="100px" />
+<br>颜色名称<input type="text" name="colour" value="${sell.colour}">  <br>
     维修项目
-    <c:forEach var="b" items="${basicData}">
-        <c:if test="${maintain.maintainProject == b.id}">${b.baseName}</c:if>
-    </c:forEach><br>
-    状态
-    <c:forEach var="bd" items="${basicData}">
-        <c:if test="${maintain.status == bd.id}">${bd.baseName}</c:if>
-    </c:forEach><br>
-    审核:<select name="status">
-            <option value="3">已审核</option>
-            <option value="4">维修完成</option>
-        </select>
-        <input type="hidden" name="id" value="${maintain.id}"><br>
+    <c:forEach items="${basicDataList}" var="b">
+        <input type="radio" name="maintainProject" value="${b.id}" <c:if test="${sell.maintainProject == b.id}">checked</c:if> />${b.baseName}
+    </c:forEach><br/>
+        <input type="hidden" name="id" value="${sell.id}"><br>
     <input type="button" value="修改" onclick="update()"/>
 </form>
 </body>

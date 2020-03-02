@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dj.pms.common.SystemConstant;
 import com.dj.pms.pojo.BasicData;
 import com.dj.pms.pojo.Maintain;
+import com.dj.pms.pojo.Sell;
 import com.dj.pms.service.BasicDataService;
 import com.dj.pms.service.MaintainService;
 import com.dj.pms.service.SellService;
@@ -59,14 +60,14 @@ public class SellPageController {
      */
     @RequestMapping("toUpdate/{id}")
     public String toUpdate(@PathVariable Integer id, Model model) {
-        QueryWrapper<Maintain> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Sell> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
-  //      Maintain maintain = maintainService.getOne(queryWrapper);
-//        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
-//        queryWrapper1.eq("p_id", 5);
-        List<BasicData> basicDataList = basicDataService.list();
-  //      model.addAttribute("maintain", maintain);
-        model.addAttribute("basicData", basicDataList);
+        Sell sell = sellService.getOne(queryWrapper);
+        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("p_id", 5);
+        List<BasicData> basicDataList = basicDataService.list(queryWrapper1);
+        model.addAttribute("sell", sell);
+        model.addAttribute("basicDataList", basicDataList);
         return "sell/update";
     }
 

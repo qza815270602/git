@@ -114,6 +114,33 @@
 
 
     //去修改
+    function updateById(){
+        var length = $("input[name='id']:checked").length;
+
+        if(length <= 0){
+            layer.msg("至少选择一项", {icon: 5});
+            return;
+        }
+        if(length > 1){
+            layer.msg("只能选择一个", {icon: 5});
+            return;
+        }
+
+        var id = $("input[name='id']:checked").val();
+        layer.open({
+            type: 2,
+            title: '修改页面',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['380px', '90%'],
+            content: '<%=request.getContextPath()%>/sell/toUpdate/'+id
+        });
+
+    }
+
+
+
+
     function addById(id){
         $.post("<%=request.getContextPath()%>/sell/addById?id="+id,
             {},
@@ -129,7 +156,7 @@
 
     }
 
-    //去修改
+
     function add(){
             layer.open({
                 type: 2,
@@ -160,7 +187,7 @@
     <input type="button" value="上/下架" onclick="updateStatus()" />
 </shiro:hasPermission>
         <shiro:hasPermission name="sell:update">
-    <input type="button" value="修改" onclick="update()" />
+    <input type="button" value="修改" onclick="updateById()" />
 </shiro:hasPermission>
     </div>
 </form>

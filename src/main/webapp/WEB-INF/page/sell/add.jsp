@@ -15,41 +15,11 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/My97DatePicker/WdatePicker.js"></script>
     <script>
 
-<%--            //注册--%>
-<%--        function add() {--%>
-<%--                    var index = layer.load(1, {shade: 0.3}, {shadeClose: true}); //解决网络延迟的加载重复操作问题--%>
-<%--                    layer.msg('请稍等', {--%>
-<%--                        icon: 1,--%>
-<%--                        time: 2000, //2秒关闭（如果不配置，默认是3秒）--%>
-<%--                        shade: [0.8, '#393D49']--%>
-<%--                    }, function () {--%>
-<%--                        $.post("<%=request.getContextPath()%>/sell/add ",--%>
-<%--                            $("#fm").serialize(),--%>
-<%--                            function (data) {--%>
-<%--                                layer.close(index);--%>
-<%--                                if (data.code == -1) {--%>
-<%--                                    layer.msg(data.msg, {icon: 5});--%>
-<%--                                    return;--%>
-<%--                                }--%>
-<%--                                parent.window.location.href = "<%=request.getContextPath()%>/sell/toShow";--%>
-<%--                            });--%>
-<%--                    });--%>
-
-<%--                }--%>
-
-
             function add() {
-                // var file = $('#file')[0].files[0];
                 var formData = new FormData($('#fm')[0]);
-                // formData.append("file", $("#file").val());
-                // formData.append("sellName", $("#sellName").val());
-                // formData.append("sellPrice", $("#sellPrice").val());
-                // formData.append("colour", $("#colour").val());
-                // formData.append("maintainProject", $("#maintainProject").val());
-                // formData.append("isDel", $("#isDel").val());
                 var index = layer.load(1,{shade:0.3});
                 $.ajax({
-                    url:'<%= request.getContextPath() %>/sell/updateImg',
+                    url:'<%= request.getContextPath() %>/sell/addImg',
                     dataType:'json',
                     type:'POST',
                     data: formData,

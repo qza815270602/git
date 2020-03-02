@@ -1,12 +1,10 @@
 package com.dj.pms.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dj.pms.common.ResultModel;
 import com.dj.pms.common.SystemConstant;
-import com.dj.pms.pojo.Maintain;
-import com.dj.pms.pojo.Sell;
-import com.dj.pms.pojo.User;
-import com.dj.pms.pojo.UserRole;
+import com.dj.pms.pojo.*;
 import com.dj.pms.service.MaintainService;
 import com.dj.pms.service.SellService;
 import com.dj.pms.service.SellUserService;
@@ -68,15 +66,14 @@ public class SellController {
         }
     }
 
-    @RequestMapping("updateImg")
-    public ResultModel<Object> updateImg(MultipartFile file, Sell sell) {
+    @RequestMapping("addImg")
+    public ResultModel<Object> addImg(MultipartFile file, Sell sell) {
         try {
             if (null == sell.getMaintainProject() || StringUtils.isEmpty(sell.getColour())
                     || StringUtils.isEmpty(sell.getSellName())
                     || StringUtils.isEmpty(sell.getSellPrice())) {
                 return new ResultModel<>().error(SystemConstant.NOT_NULL);
             }
-
             // 将上传图片 的 参数 和 名字 传给 upload 方法
             //将图片信息保存到数据库中
             sell.setImg(QiNiuYunUtil.upload(file));
@@ -88,25 +85,35 @@ public class SellController {
         }
     }
 
-
-    /**
-     * 注册
-     */
-    @RequestMapping("add")
-    public ResultModel<Object> add(Sell sell) {
+    @RequestMapping("updateImg")
+    public ResultModel<Object> updateImg(MultipartFile file, Sell sell) {
         try {
             if (null == sell.getMaintainProject() || StringUtils.isEmpty(sell.getColour())
                     || StringUtils.isEmpty(sell.getSellName())
                     || StringUtils.isEmpty(sell.getSellPrice())) {
                 return new ResultModel<>().error(SystemConstant.NOT_NULL);
             }
-            sellService.addSell(sell);
-            return new ResultModel<>().success(SystemConstant.SUCCESS);
+            // 将上传图片 的 参数 和 名字 传给 upload 方法
+            //将图片信息保存到数据库中
+            if (sell.getImg() == null){
+                sell.setImg(QiNiuYunUtil.upload(file));
+            }
+            UpdateWrapper<Sell> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.set("sell_name", sell.getSellName());
+            updateWrapper.set("img", sell.getImg());
+            updateWrapper.set("sell_price", sell.getSellPrice());
+            updateWrapper.set("colour", sell.getColour());
+            updateWrapper.set("maintain_project", sell.getMaintainProject());
+            updateWrapper.eq("id", sell.getId());
+            sellService.update(updateWrapper);
+            return new ResultModel<Object>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
+            return new ResultModel<Object>().error(SystemConstant.ERROR + e.getMessage());
         }
     }
+
+
 
     /**
      * 购买
