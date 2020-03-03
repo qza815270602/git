@@ -39,7 +39,7 @@ public class MaintainPageController {
     public String toAdd(Model model){
         QueryWrapper<BasicData> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_del", SystemConstant.IS_DEL_ONE);
-        queryWrapper.eq("p_id", 5);
+        queryWrapper.eq("p_id", SystemConstant.STATE_PROCESS_STATE);
         List<BasicData> basicDataList = basicDataService.list(queryWrapper);
         model.addAttribute("basicDataList", basicDataList);
         return "maintain/add";
@@ -53,8 +53,6 @@ public class MaintainPageController {
         QueryWrapper<Maintain> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         Maintain maintain = maintainService.getOne(queryWrapper);
-//        QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
-//        queryWrapper1.eq("p_id", 5);
         List<BasicData> basicDataList = basicDataService.list();
         model.addAttribute("maintain", maintain);
         model.addAttribute("basicData", basicDataList);

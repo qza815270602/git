@@ -34,6 +34,8 @@ public class RoleController {
 
     /**
      * 展示
+     * @param roleName
+     * @return
      */
     @RequestMapping("show")
     public ResultModel<Object> show(String roleName) {
@@ -48,6 +50,8 @@ public class RoleController {
 
     /**
      * 验证是否有角色
+     * @param roleName
+     * @return
      */
     @RequestMapping("findByName")
     public boolean findByName(String roleName) {
@@ -62,6 +66,8 @@ public class RoleController {
 
     /**
      * 注册
+     * @param role
+     * @return
      */
     @RequestMapping("add")
     public ResultModel<Object> add(Role role) {
@@ -76,6 +82,8 @@ public class RoleController {
 
     /**
      * 修改
+     * @param role
+     * @return
      */
     @RequestMapping("update")
     public ResultModel<Object> update(Role role) {
@@ -90,6 +98,8 @@ public class RoleController {
 
     /**
      * 删除
+     * @param role
+     * @return
      */
     @RequestMapping("del")
     public ResultModel<Object> del(Role role) {
@@ -104,6 +114,8 @@ public class RoleController {
 
     /**
      * 资源表的关联
+     * @param roleId
+     * @return
      */
     @RequestMapping("roleResources/{roleId}")
     public ResultModel<Object> roleResources(@PathVariable Integer roleId) {
@@ -143,6 +155,9 @@ public class RoleController {
 
     /**
      * 删除角色原关联的资源保存新关联的资源
+     * @param roleId
+     * @param resourceIds
+     * @return
      */
     @RequestMapping("saveUpdateRole/{roleId}")
     public ResultModel<Object> saveUpdateRole(@PathVariable Integer roleId, Integer[] resourceIds) {

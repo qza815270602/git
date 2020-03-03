@@ -38,6 +38,10 @@ public class UserController {
 
     /**
      * 登录
+     * @param userName
+     * @param password
+     * @param session
+     * @return
      */
     @RequestMapping("login")
     public ResultModel<Object> login(String userName, String password, HttpSession session) {
@@ -64,7 +68,6 @@ public class UserController {
 //            //存放资源信息
 //            List<Resource> resourceList = resourceService.findResource(user1.getId());
 //            session.setAttribute(SystemConstant.SESSION_RESOURCE, resourceList);
-
             // shiro登录方式
             Subject subject = SecurityUtils.getSubject();//得到subject
             UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
@@ -78,6 +81,8 @@ public class UserController {
 
     /**
      * 查询盐
+     * @param userName
+     * @return
      */
     @RequestMapping("findSalt")
     public ResultModel<Object> findSalt(String userName){
@@ -98,6 +103,8 @@ public class UserController {
 
     /**
      * 展示
+     * @param user
+     * @return
      */
     @RequestMapping("show")
     public ResultModel<Object> show(User user) {
@@ -111,7 +118,9 @@ public class UserController {
     }
 
     /**
-     * 验证是否有用户
+     *验证是否有用户
+     * @param user
+     * @return
      */
     @RequestMapping("findByName")
     public boolean findByName(User user) {
@@ -127,6 +136,9 @@ public class UserController {
 
     /**
      * 注册
+     * @param user
+     * @param userRole
+     * @return
      */
     @RequestMapping("add")
     public ResultModel<Object> add(User user, UserRole userRole) {
@@ -141,6 +153,8 @@ public class UserController {
 
     /**
      * 修改
+     * @param user
+     * @return
      */
     @RequestMapping("update")
     public ResultModel<Object> update(User user) {
@@ -154,7 +168,9 @@ public class UserController {
     }
 
     /**
-     * id删除
+     * 删除
+     * @param user
+     * @return
      */
     @RequestMapping("del")
     public ResultModel<Object> del(User user) {
@@ -169,6 +185,8 @@ public class UserController {
 
     /**
      * 批量删除
+     * @param ids
+     * @return
      */
     @RequestMapping("delByIds")
     public ResultModel<Object> delByIds(Integer[] ids) {
@@ -183,6 +201,8 @@ public class UserController {
 
     /**
      * 授权
+     * @param userRole
+     * @return
      */
     @RequestMapping("updateUserRole")
     public ResultModel<Object> updateUserRole(UserRole userRole) {
@@ -197,6 +217,8 @@ public class UserController {
 
     /**
      * 手机验证码
+     * @param phone
+     * @return
      */
     @RequestMapping("sendMessage")
     public ResultModel<Object> sendMessage(String phone) {
@@ -217,6 +239,8 @@ public class UserController {
 
     /**
      * 找回密码
+     * @param user
+     * @return
      */
     @RequestMapping("find")
     public ResultModel<Object> find(User user) {

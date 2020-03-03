@@ -49,7 +49,7 @@ public class SellPageController {
     public String toAdd(Model model){
         QueryWrapper<BasicData> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_del", SystemConstant.IS_DEL_ONE);
-        queryWrapper.eq("p_id", 5);
+        queryWrapper.eq("p_id", SystemConstant.STATE_PROCESS_STATE);
         List<BasicData> basicDataList = basicDataService.list(queryWrapper);
         model.addAttribute("basicDataList", basicDataList);
         return "sell/add";
@@ -64,7 +64,7 @@ public class SellPageController {
         queryWrapper.eq("id", id);
         Sell sell = sellService.getOne(queryWrapper);
         QueryWrapper<BasicData> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("p_id", 5);
+        queryWrapper1.eq("p_id", SystemConstant.STATE_PROCESS_STATE);
         List<BasicData> basicDataList = basicDataService.list(queryWrapper1);
         model.addAttribute("sell", sell);
         model.addAttribute("basicDataList", basicDataList);

@@ -31,6 +31,8 @@ public class ResourceController {
 
     /**
      * left展示
+     * @param session
+     * @return
      */
     @RequestMapping("left")
     public ResultModel<Object> left(HttpSession session) {
@@ -54,6 +56,8 @@ public class ResourceController {
 
     /**
      * 验证是否有资源
+     * @param resourceName
+     * @return
      */
     @RequestMapping("findByName")
     public boolean findByName(String resourceName){
@@ -68,6 +72,8 @@ public class ResourceController {
 
     /**
      * 注册
+     * @param resource
+     * @return
      */
     @RequestMapping("add")
     public ResultModel<Object> add(Resource resource){
@@ -85,6 +91,8 @@ public class ResourceController {
 
     /**
      * 修改
+     * @param resource
+     * @return
      */
     @RequestMapping("update")
     public ResultModel<Object> update(Resource resource){
@@ -110,6 +118,8 @@ public class ResourceController {
 
     /**
      * 资源删除
+     * @param id
+     * @return
      */
     @RequestMapping("delById")
     public ResultModel<Object> delById(Integer id) {
