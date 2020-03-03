@@ -13,6 +13,8 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/layer/layer.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui-v2.5.5/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui-v2.5.5/layui/css/layui.css"  media="all">
     <script>
 
             function add() {
@@ -61,7 +63,7 @@
                     </c:forEach><br>
                 </select>
         <input type="hidden" name="isDel" id="isDel" value="1"><br>
-    <input type="button" value="注册" onclick="add()"/>
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="add()">注册</button>
 </form>
 </body>
 </html>

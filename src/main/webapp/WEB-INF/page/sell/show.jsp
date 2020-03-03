@@ -18,6 +18,7 @@
     <title>展示</title>
 </head>
 <script>
+    var totalNum = 0;
     $(function(){
         show();
     })
@@ -30,9 +31,10 @@
                     layer.msg(data.data.msg);
                     return;
                 }
+                totalNum = data.data.totalNum;
                 var html = "";
-                for (var i = 0; i < data.data.length; i++) {
-                    var list = data.data[i];
+                for (var i = 0; i < data.data.sellList.length; i++) {
+                    var list = data.data.sellList[i];
                     html += "<tr>";
                     html += "<td>";
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
@@ -49,13 +51,36 @@
                     html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>"
                     html += "<td>";
                     <shiro:hasPermission name="sell:gm">
-                    html += list.isDel == 1?"<input type = 'button' value = '购买' onclick = 'addById("+list.id+")'>":"❤已下架❤";
+                    html += list.isDel == 1?"<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='addById("+list.id+")'>购买</button>":"❤已下架❤";
                    </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
                 }
                 $("#tbd").html(html);
+                var pageNo = $("#pageNo").val();
+                var pageHtml = "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) - 1)+")'>上一页</button>";
+                pageHtml += "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) + 1)+")')'>下一页</button>";
+                $("#pageInfo").html(pageHtml);
         })
+    }
+
+    function page(page) {
+
+        if (page < 1) {
+            layer.msg('首页啦!', {icon:0});
+            return;
+        }
+        if (page > totalNum) {
+            layer.msg('已经到尾页啦!!', {icon:0});
+            return;
+        }
+        $("#pageNo").val(page);
+        show();
+
+    }
+    function find(){
+        $("#pageNo").val(1);
+        show();
     }
 
     //上/下架
@@ -160,7 +185,7 @@
     function add(){
             layer.open({
                 type: 2,
-                title: '修改页面',
+                title: '页面',
                 shadeClose: true,
                 shade: 0.8,
                 area: ['380px', '90%'],
@@ -172,22 +197,23 @@
 <body>
 <form id="fm">
     <div align="center">
-
+        <input type="hidden" value="1" id="pageNo" name="pageNo">
     状态<select name="isDel">
             <option value="2">--请选择--</option>
             <option value="1">已上架</option>
             <option value="0">已下架</option>
         </select><br>
-    <input type="button" value="搜索" onclick="show()">
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button>
 
         <shiro:hasPermission name="sell:add">
-             <input type="button" value="新增玩具信息" onclick="add()">
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="add()">新增玩具信息</button>
+
         </shiro:hasPermission>
 <shiro:hasPermission name="sell:del">
-    <input type="button" value="上/下架" onclick="updateStatus()" />
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="updateStatus()">上/下架</button>
 </shiro:hasPermission>
         <shiro:hasPermission name="sell:update">
-    <input type="button" value="修改" onclick="updateById()" />
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="updateById()">修改</button>
 </shiro:hasPermission>
     </div>
 </form>
@@ -216,5 +242,8 @@
         <tbody id = "tbd">
         </tbody>
     </table>
+<div id="pageInfo" align="center">
+
+</div>
 </body>
 </html>

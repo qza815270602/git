@@ -5,14 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
+
 <title>Insert title here</title>
 </head>
-<body>
-			
-			
+<body style="overflow:hidden;">
+
+
 		<h1 align="center">欢迎${user.userName}登陆玩具之家</h1>
 
-		<span><a href="<%=request.getContextPath()%>/user/esc">退出</a></span>
+		<a href="<%=request.getContextPath()%>/user/esc">退出</a>
 	
 		<div id="datetime" align="right" style="color:black">
 		 <script>

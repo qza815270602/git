@@ -18,6 +18,7 @@
     <title>展示</title>
 </head>
 <script>
+    var totalNum = 0;
     $(function(){
         show();
     })
@@ -30,9 +31,10 @@
                     layer.msg(data.data.msg);
                     return;
                 }
+                totalNum = data.data.totalNum;
                 var html = "";
-                for (var i = 0; i < data.data.length; i++) {
-                    var list = data.data[i];
+                for (var i = 0; i < data.data.maintainList.length; i++) {
+                    var list = data.data.maintainList[i];
                     html += "<tr>";
                     html += "<td>";
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
@@ -44,15 +46,37 @@
                     html += "<td>"+list.statusShow+"</td>";
                     html += "<td>";
                     <shiro:hasPermission name="maintain:cz">
-                    html += "<input type = 'button' value = '审核' onclick = 'updateById("+list.id+")'>";
+                    html += "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='updateById("+list.id+")'>审核</button>";
                     </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
                 }
                 $("#tbd").html(html);
+                var pageNo = $("#pageNo").val();
+                var pageHtml = "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) - 1)+")'>上一页</button>";
+                pageHtml += "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) + 1)+")')'>下一页</button>";
+                $("#pageInfo").html(pageHtml);
         })
     }
 
+    function page(page) {
+
+        if (page < 1) {
+            layer.msg('首页啦!', {icon:0});
+            return;
+        }
+        if (page > totalNum) {
+            layer.msg('已经到尾页啦!!', {icon:0});
+            return;
+        }
+        $("#pageNo").val(page);
+        show();
+
+    }
+    function find(){
+        $("#pageNo").val(1);
+        show();
+    }
 
 
     //去修改
@@ -67,7 +91,6 @@
             });
 
     }
-
 
 
 
@@ -121,6 +144,7 @@
 <body>
 <form id="fm">
     <div align="center">
+        <input type="hidden" value="1" id="pageNo" name="pageNo">
 <shiro:hasPermission name="maintain:find">
     状态<select name="status">
             <option value="0">--请选择--</option>
@@ -128,13 +152,13 @@
             <option value="3">已审核</option>
             <option value="4">维修完成</option>
         </select><br>
-    <input type="button" value="搜索" onclick="show()">
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button><br><br>
 </shiro:hasPermission>
         <shiro:hasPermission name="maintain:add">
-             <input type="button" value="填写维修单" onclick="add()">
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="add()">填写维修单</button>
         </shiro:hasPermission>
 <shiro:hasPermission name="maintain:del">
-        <input type="button" value="删除" onclick="del()">
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="del()">删除</button>
 </shiro:hasPermission>
     </div>
 </form>
@@ -161,5 +185,8 @@
         <tbody id = "tbd">
         </tbody>
     </table>
+<div id="pageInfo" align="center">
+
+</div>
 </body>
 </html>

@@ -8,6 +8,8 @@ import com.dj.pms.pojo.Resource;
 import com.dj.pms.pojo.Role;
 import com.dj.pms.pojo.RoleResource;
 import com.dj.pms.service.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -26,12 +29,20 @@ public class MaintainController {
 
     /**
      * 展示
+     * @param status
+     * @param pageNo
+     * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(Integer status) {
+    public ResultModel<Object> show(Integer status, Integer pageNo) {
+        HashMap<String, Object> map = new HashMap<>();
         try {
+            PageHelper.startPage(pageNo, SystemConstant.PAGING_THREE);
             List<Maintain> maintainList = maintainService.findAllMaintain(status);
-            return new ResultModel<>().success(maintainList);
+            PageInfo<Maintain> pageInfo = new PageInfo<Maintain>(maintainList);
+            map.put("totalNum", pageInfo.getPages());
+            map.put("maintainList", maintainList);
+            return new ResultModel<>().success(map);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
@@ -41,6 +52,8 @@ public class MaintainController {
 
     /**
      * 注册
+     * @param maintain
+     * @return
      */
     @RequestMapping("add")
     public ResultModel<Object> add(Maintain maintain) {
@@ -58,6 +71,8 @@ public class MaintainController {
 
     /**
      * 修改
+     * @param maintain
+     * @return
      */
     @RequestMapping("update")
     public ResultModel<Object> update(Maintain maintain) {
@@ -72,6 +87,9 @@ public class MaintainController {
 
     /**
      * 删除
+     * @param id
+     * @param isDel
+     * @return
      */
     @RequestMapping("del")
     public ResultModel<Object> del(Integer id, Integer isDel) {

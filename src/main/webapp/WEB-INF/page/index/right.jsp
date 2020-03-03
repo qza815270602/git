@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js" ></script>
 </head>
 <body>
 	

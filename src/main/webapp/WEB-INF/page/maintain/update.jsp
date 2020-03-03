@@ -14,6 +14,8 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/layer/layer.js"></script>
     <script src="<%=request.getContextPath()%>/static/validate/jquery.validate.js"></script>
     <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui-v2.5.5/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui-v2.5.5/layui/css/layui.css"  media="all">
     <script>
 
 
@@ -64,7 +66,7 @@
             <option value="4">维修完成</option>
         </select>
         <input type="hidden" name="id" value="${maintain.id}"><br>
-    <input type="button" value="修改" onclick="update()"/>
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="update()">修改</button>
 </form>
 </body>
 </html>

@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dj.pms.common.ResultModel;
 import com.dj.pms.common.SystemConstant;
 import com.dj.pms.pojo.*;
-import com.dj.pms.service.MaintainService;
 import com.dj.pms.service.SellService;
 import com.dj.pms.service.SellUserService;
 import com.dj.pms.service.UserRoleService;
 import com.dj.pms.utils.QiNiuYunUtil;
-import com.dj.pms.utils.QiniuUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/sell/")
@@ -36,13 +35,22 @@ public class SellController {
     private UserRoleService userRoleService;
 
     /**
-     * 展示
+     *  展示
+     *
+     * @param isDel
+     * @param pageNo
+     * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(Integer isDel) {
+    public ResultModel<Object> show(Integer isDel, Integer pageNo) {
+        HashMap<String, Object> map = new HashMap<>();
         try {
+            PageHelper.startPage(pageNo, SystemConstant.PAGING_THREE);
             List<Sell> sellList = sellService.findAllSell(isDel);
-            return new ResultModel<>().success(sellList);
+            PageInfo<Sell> pageInfo = new PageInfo<Sell>(sellList);
+            map.put("totalNum", pageInfo.getPages());
+            map.put("sellList", sellList);
+            return new ResultModel<>().success(map);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());
@@ -51,6 +59,8 @@ public class SellController {
 
     /**
      * 展示购买信息
+     * @param session
+     * @return
      */
     @RequestMapping("showSellUser")
     public ResultModel<Object> showSellUser(HttpSession session) {
@@ -66,6 +76,12 @@ public class SellController {
         }
     }
 
+    /**
+     * 注册七牛上传图片
+     * @param file
+     * @param sell
+     * @return
+     */
     @RequestMapping("addImg")
     public ResultModel<Object> addImg(MultipartFile file, Sell sell) {
         try {
@@ -85,6 +101,12 @@ public class SellController {
         }
     }
 
+    /**
+     * 修改
+     * @param file
+     * @param sell
+     * @return
+     */
     @RequestMapping("updateImg")
     public ResultModel<Object> updateImg(MultipartFile file, Sell sell) {
         try {
@@ -113,10 +135,11 @@ public class SellController {
         }
     }
 
-
-
     /**
-     * 购买
+     *   购买
+     * @param id
+     * @param session
+     * @return
      */
     @RequestMapping("addById")
     public ResultModel<Object> addById(Integer id, HttpSession session) {
@@ -131,6 +154,9 @@ public class SellController {
 
     /**
      * 修改
+     * @param id
+     * @param isDel
+     * @return
      */
     @RequestMapping("updateStatus")
     public ResultModel<Object> updateStatus(Integer id ,Integer isDel) {
@@ -145,6 +171,8 @@ public class SellController {
 
     /**
      * 退货
+     * @param id
+     * @return
      */
     @RequestMapping("updateById")
     public ResultModel<Object> updateById(Integer id) {

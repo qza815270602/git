@@ -44,7 +44,7 @@
                     html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>"
                     html += "<td>";
                     <shiro:hasPermission name="sell:th">
-                    html += list.isDel == 1?"<input type = 'button' value = '退货' onclick = 'updateById("+list.id+")'>":"❤已下架❤";
+                    html += list.isDel == 1?"<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='updateById("+list.id+")'>退货</button>":"❤已下架❤";
                    </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
