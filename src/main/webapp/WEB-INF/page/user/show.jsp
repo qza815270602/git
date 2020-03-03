@@ -15,6 +15,7 @@
 <head>
     <title>展示</title>
 </head>
+var totalNum = 0;
 <script>
     $(function(){
         show();
@@ -28,9 +29,10 @@
                     layer.msg(data.data.msg);
                     return;
                 }
+                totalNum = data.data.totalNum;
                 var html = "";
-                for (var i = 0; i < data.data.length; i++) {
-                    var list = data.data[i];
+                for (var i = 0; i < data.data.userList.length; i++) {
+                    var list = data.data.userList[i];
                     html += "<tr>";
                     html += "<td>";
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
@@ -52,7 +54,29 @@
                     html += "</tr>";
                 }
                 $("#tbd").html(html);
+                var pageNo = $("#pageNo").val();
+                var pageHtml = "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) - 1)+")'>上一页</button>";
+                pageHtml += "<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='page("+(parseInt(pageNo) + 1)+")')'>下一页</button>";
+                $("#pageInfo").html(pageHtml);
         })
+    }
+    function page(page) {
+
+        if (page < 1) {
+            layer.msg('首页啦!', {icon:0});
+            return;
+        }
+        if (page > totalNum) {
+            layer.msg('已经到尾页啦!!', {icon:0});
+            return;
+        }
+        $("#pageNo").val(page);
+        show();
+
+    }
+    function find(){
+        $("#pageNo").val(1);
+        show();
     }
 
 
@@ -226,6 +250,7 @@
 </script>
 <body>
 <form id="fm">
+    <input type="hidden" value="1" id="pageNo" name="pageNo">
     用户名/手机号/邮箱<input name="userName" type="text"><br>
     角色:
     <input type="radio" name="roleId" value="1" >用户
@@ -238,19 +263,19 @@
             <option value="1">激活</option>
             <option value="-1">未激活</option>
         </select><br>
-    <input type="button" value="搜索" onclick="show()">
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button>
 </form>
 <shiro:hasPermission name="user:update">
-    <input type="button" value="修改" onclick="updateById()">&nbsp;
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="updateById()">修改</button>
 </shiro:hasPermission>
 <shiro:hasPermission name="user:updateStatus">
-    <input type="button" value="激活" onclick="updateStatusById()">&nbsp;
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="updateStatusById()">激活</button>
 </shiro:hasPermission>
 <shiro:hasPermission name="user:del">
-    <input type="button" value="删除" onclick = 'delByIds()'>&nbsp;
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="delByIds()">删除</button>
 </shiro:hasPermission>
 <shiro:hasPermission name="user:confer">
-    <input type="button" value="授权" onclick = "confer()">
+    <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="confer()">授权</button>
 </shiro:hasPermission>
     <table  class="layui-table">
         <colgroup>
@@ -277,5 +302,8 @@
         <tbody id = "tbd">
         </tbody>
     </table>
+<div id="pageInfo" align="center">
+
+</div>
 </body>
 </html>

@@ -20,6 +20,9 @@
         <if test="isDel != null and isDel != 2">
             and s.is_del = #{isDel}
         </if>
+        <if test="sellName != null and sellName != '' ">
+            and s.sell_name = #{sellName}
+        </if>
         ORDER BY s.id DESC
 
 
@@ -33,11 +36,13 @@
             s.colour,
             s.maintain_project,
             s.is_del,
-            b.base_name AS projectShow
+            b.base_name AS projectShow,
+            u.user_name AS userName
         FROM
             sell_user su
         LEFT JOIN sell s ON su.sell_id = s.id
         LEFT JOIN basic_data b ON s.maintain_project = b.id
+        LEFT JOIN user u ON u.id = su.user_id
         <where>
             su.is_del = 1
             <if test="roleId == 1">

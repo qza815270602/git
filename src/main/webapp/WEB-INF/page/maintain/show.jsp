@@ -151,7 +151,7 @@
             <option value="2">已预约</option>
             <option value="3">已审核</option>
             <option value="4">维修完成</option>
-        </select><br>
+        </select><br><br>
     <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button><br><br>
 </shiro:hasPermission>
         <shiro:hasPermission name="maintain:add">

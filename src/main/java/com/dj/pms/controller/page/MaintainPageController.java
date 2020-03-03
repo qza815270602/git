@@ -28,7 +28,7 @@ public class MaintainPageController {
      *  去展示
      */
     @RequestMapping("toShow")
-    public String toShow() {
+    public String toShow(Model model) {
         return "maintain/show";
     }
 

@@ -57,12 +57,13 @@
     <br>
     颜色<input type="text" name="colour" id="colour"><br>
     维修项目
-                <select name="maintainProject" id="maintainProject">
-                    <c:forEach var="b" items="${basicDataList}">
-                         <option value="${b.id}">${b.baseName}</option>
-                    </c:forEach><br>
-                </select>
-        <input type="hidden" name="isDel" id="isDel" value="1"><br>
+    <select name="maintainProject">
+        <c:forEach var="b" items="${basicDataList}">
+            <option value="${b.id}">${b.baseName}</option>
+        </c:forEach><br>
+    </select>
+
+    <input type="hidden" name="isDel" id="isDel" value="1"><br>
     <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="add()">注册</button>
 </form>
 </body>

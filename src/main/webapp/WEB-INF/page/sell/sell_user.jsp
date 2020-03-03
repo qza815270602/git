@@ -34,6 +34,7 @@
                 for (var i = 0; i < data.data.length; i++) {
                     var list = data.data[i];
                     html += "<tr>";
+                    html += "<td>"+list.userName+"</td>";
                     html += "<td>"+list.sellName+"</td>";
                     html += "<td>";
                     html += "<img src='"+list.img+"' width='100px' height='100px'>";
@@ -84,6 +85,7 @@
         </colgroup>
         <thead>
         <tr>
+            <th style="background: aquamarine;">用户名</th>
             <th style="background: aquamarine;">名称</th>
             <th style="background: aquamarine;">玩具示例</th>
             <th style="background: aquamarine;">价格</th>

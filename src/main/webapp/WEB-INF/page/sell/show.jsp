@@ -203,7 +203,8 @@
             <option value="1">已上架</option>
             <option value="0">已下架</option>
         </select><br>
-        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button>
+        名称<input type="text" name="sellName">
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="find()">搜索</button><br>
 
         <shiro:hasPermission name="sell:add">
             <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="add()">新增玩具信息</button>

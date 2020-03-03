@@ -42,11 +42,11 @@ public class SellController {
      * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(Integer isDel, Integer pageNo) {
+    public ResultModel<Object> show(Integer isDel, Integer pageNo,String sellName) {
         HashMap<String, Object> map = new HashMap<>();
         try {
             PageHelper.startPage(pageNo, SystemConstant.PAGING_THREE);
-            List<Sell> sellList = sellService.findAllSell(isDel);
+            List<Sell> sellList = sellService.findAllSell(isDel, sellName);
             PageInfo<Sell> pageInfo = new PageInfo<Sell>(sellList);
             map.put("totalNum", pageInfo.getPages());
             map.put("sellList", sellList);

@@ -5,11 +5,14 @@ package com.dj.pms.controller;
 import com.dj.pms.common.ResultModel;
 import com.dj.pms.common.SystemConstant;
 import com.dj.pms.pojo.Resource;
+import com.dj.pms.pojo.Sell;
 import com.dj.pms.pojo.User;
 import com.dj.pms.pojo.UserRole;
 import com.dj.pms.service.ResourceService;
 import com.dj.pms.service.UserRoleService;
 import com.dj.pms.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -107,10 +110,15 @@ public class UserController {
      * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(User user) {
+    public ResultModel<Object> show(User user, Integer pageNo) {
+        HashMap<String, Object> map = new HashMap<>();
         try {
+            PageHelper.startPage(pageNo, SystemConstant.PAGING_THREE);
             List<User> userList = userService.findAllUser(user);
-            return new ResultModel<>().success(userList);
+            PageInfo<User> pageInfo = new PageInfo<User>(userList);
+            map.put("totalNum", pageInfo.getPages());
+            map.put("userList", userList);
+            return new ResultModel<>().success(map);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResultModel<>().error(SystemConstant.ERROR + e.getMessage());

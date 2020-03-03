@@ -30,8 +30,8 @@ public class SellServiceImpl extends ServiceImpl<SellMapper, Sell> implements Se
     private SellUserService sellUserService;
 
     @Override
-    public List<Sell> findAllSell(Integer isDel) throws Exception {
-        return sellMapper.findAllSell(isDel);
+    public List<Sell> findAllSell(Integer isDel, String sellName) throws Exception {
+        return sellMapper.findAllSell(isDel, sellName);
     }
 
     @Override

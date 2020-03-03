@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SellMapper extends BaseMapper<Sell> {
 
-    List<Sell> findAllSell(Integer isDel) throws DataBindingException;
+    List<Sell> findAllSell(Integer isDel, String sellName) throws DataBindingException;
 
     List<Sell> findAllSellUser(Integer userId, Integer roleId) throws DataBindingException;
 }
