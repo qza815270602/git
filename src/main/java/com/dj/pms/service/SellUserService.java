@@ -10,5 +10,5 @@ import java.util.List;
 public interface SellUserService extends IService<SellUser> {
 
 
-    void addSellUser(Integer id, HttpSession session) throws Exception;
+    void addSellUser(Integer id, Integer repertory, HttpSession session) throws Exception;
 }

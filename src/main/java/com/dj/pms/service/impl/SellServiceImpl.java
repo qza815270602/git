@@ -1,5 +1,6 @@
 package com.dj.pms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dj.pms.common.SystemConstant;
@@ -53,10 +54,13 @@ public class SellServiceImpl extends ServiceImpl<SellMapper, Sell> implements Se
     }
 
     @Override
-    public void updateById(Integer id) throws Exception {
-        UpdateWrapper<SellUser> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set("is_del", SystemConstant.IS_DEL_ZERO);
-        updateWrapper.eq("sell_id", id);
-        sellUserService.update(updateWrapper);
+    public void updateBySellId(Integer sellId, Integer repertory, Integer count) throws Exception {
+        QueryWrapper<SellUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sell_id", sellId);
+        sellUserService.remove(queryWrapper);
+        UpdateWrapper<Sell> updateWrapper1 = new UpdateWrapper<>();
+        updateWrapper1.set("repertory", repertory + count);
+        updateWrapper1.eq("id", sellId);
+        this.update(updateWrapper1);
     }
 }

@@ -120,14 +120,8 @@ public class SellController {
             if (sell.getImg() == null){
                 sell.setImg(QiNiuYunUtil.upload(file));
             }
-            UpdateWrapper<Sell> updateWrapper = new UpdateWrapper<>();
-            updateWrapper.set("sell_name", sell.getSellName());
-            updateWrapper.set("img", sell.getImg());
-            updateWrapper.set("sell_price", sell.getSellPrice());
-            updateWrapper.set("colour", sell.getColour());
-            updateWrapper.set("maintain_project", sell.getMaintainProject());
-            updateWrapper.eq("id", sell.getId());
-            sellService.update(updateWrapper);
+
+            sellService.updateById(sell);
             return new ResultModel<Object>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,9 +136,12 @@ public class SellController {
      * @return
      */
     @RequestMapping("addById")
-    public ResultModel<Object> addById(Integer id, HttpSession session) {
+    public ResultModel<Object> addById(Integer id, Integer repertory, HttpSession session) {
         try {
-            sellUserService.addSellUser(id, session);
+            if(repertory.equals(SystemConstant.ZERO)){
+                return new ResultModel<>().error("没库存了!");
+            }
+            sellUserService.addSellUser(id, repertory, session);
             return new ResultModel<>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,13 +168,13 @@ public class SellController {
 
     /**
      * 退货
-     * @param id
+     * @param sellId
      * @return
      */
-    @RequestMapping("updateById")
-    public ResultModel<Object> updateById(Integer id) {
+    @RequestMapping("updateBySellId")
+    public ResultModel<Object> updateBySellId(Integer sellId, Integer repertory, Integer count) {
         try {
-            sellService.updateById(id);
+            sellService.updateBySellId(sellId, repertory, count);
             return new ResultModel<>().success(SystemConstant.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

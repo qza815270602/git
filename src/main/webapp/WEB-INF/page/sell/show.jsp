@@ -35,6 +35,7 @@
                 var html = "";
                 for (var i = 0; i < data.data.sellList.length; i++) {
                     var list = data.data.sellList[i];
+                    $("#repertory").val(list.repertory);
                     html += "<tr>";
                     html += "<td>";
                     html += "<input type = 'checkbox' name = 'id' value = '"+list.id+"'>";
@@ -48,11 +49,12 @@
                     html += "<td>"+list.sellPrice+"</td>";
                     html += "<td>"+list.colour+"</td>";
                     html += "<td>"+list.projectShow+"</td>";
-                    html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>"
+                    html += list.isDel == 1?"<td>上架</td>":"<td>下架</td>";
+                    html += list.repertory == 0?"<td>已售完😱</td>":"<td>"+list.repertory+"</td>";
                     html += "<td>";
-                    <shiro:hasPermission name="sell:gm">
-                    html += list.isDel == 1?"<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='addById("+list.id+")'>购买</button>":"❤已下架❤";
-                   </shiro:hasPermission>
+                        <shiro:hasPermission name="sell:gm">
+                        html += list.isDel == 1?"<button type='button' class='layui-btn layui-btn-xs layui-btn-normal' onclick='addById("+list.id+","+list.repertory+")'>购买</button>":"❤已下架❤";
+                        </shiro:hasPermission>
                     html += "</td>";
                     html += "</tr>";
                 }
@@ -166,9 +168,9 @@
 
 
 
-    function addById(id){
+    function addById(id, repertory){
         $.post("<%=request.getContextPath()%>/sell/addById?id="+id,
-            {},
+            {"repertory":repertory},
             function(data){
                 if (data.code == -1){
                     layer.msg(data.msg, {icon: 5});
@@ -218,6 +220,7 @@
 </shiro:hasPermission>
     </div>
 </form>
+<input type="hidden" id="repertory" name="repertory">
     <table  class="layui-table">
         <colgroup>
             <col width="100">
@@ -235,6 +238,7 @@
             <th style="background: aquamarine;">颜色</th>
             <th style="background: aquamarine;">玩具类型</th>
             <th style="background: aquamarine;">状态</th>
+            <th style="background: aquamarine;">库存</th>
             <shiro:hasPermission name="sell:gm">
                 <th style="background: aquamarine;">操作</th>
            </shiro:hasPermission>

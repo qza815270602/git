@@ -18,5 +18,5 @@ public interface SellService extends IService<Sell> {
 
     List<Sell> findAllSellUser(Integer userId, Integer roleId) throws Exception;
 
-    void updateById(Integer id) throws Exception;
+    void updateBySellId(Integer sellId, Integer repertory, Integer count) throws Exception;
 }

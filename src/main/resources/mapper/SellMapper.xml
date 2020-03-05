@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dj.pms.mapper.SellMapper">
+    <update id="updateRepertory">
+        update
+			sell
+		set
+			repertory = #{repertory} - 1
+		where id = #{id}
+
+    </update>
 
 
     <select id="findAllSell" resultType="com.dj.pms.pojo.Sell">
@@ -12,6 +20,7 @@
             s.colour,
             s.maintain_project,
             s.is_del,
+            s.repertory,
             b.base_name AS projectShow
         FROM
             sell s
@@ -36,8 +45,10 @@
             s.colour,
             s.maintain_project,
             s.is_del,
+            s.repertory,
             b.base_name AS projectShow,
-            u.user_name AS userName
+            u.user_name AS userName,
+            su.count as count
         FROM
             sell_user su
         LEFT JOIN sell s ON su.sell_id = s.id

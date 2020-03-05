@@ -27,5 +27,10 @@ public class SellUser {
      */
     private Integer isDel;
 
+    /**
+     * 购买数量
+     */
+    private Integer count;
+
 
 }

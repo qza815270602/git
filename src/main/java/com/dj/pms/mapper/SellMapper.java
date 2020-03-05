@@ -11,4 +11,6 @@ public interface SellMapper extends BaseMapper<Sell> {
     List<Sell> findAllSell(Integer isDel, String sellName) throws DataBindingException;
 
     List<Sell> findAllSellUser(Integer userId, Integer roleId) throws DataBindingException;
+
+    void updateRepertory(Integer id, Integer repertory) throws DataBindingException;
 }

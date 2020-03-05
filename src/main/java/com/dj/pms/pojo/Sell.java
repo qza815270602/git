@@ -60,4 +60,16 @@ public class Sell {
     @TableField(exist = false)//表示该属性不为数据库表字段，但又是必须使用的。
     private String userName;
 
+    /**
+     * 库存
+     */
+    private Integer repertory;
+
+    /**
+     * 购买数量
+     */
+    @TableField(exist = false)//表示该属性不为数据库表字段，但又是必须使用的。
+    private Integer count;
+
+
 }

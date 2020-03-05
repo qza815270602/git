@@ -64,11 +64,13 @@
     <input type="hidden" name="img" value="${sell.img}">
     价格<input type="text" name="sellPrice" value="${sell.sellPrice}"  onkeyup="if(!this.value.match(/^\+?\d*?\.?\d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:\+?\d+(?:\.\d+)?)?$/))this.o_value=this.value" maxlength="8" oninput = "value=value.replace(/[^\d.]/g,'')" width="100px" />
 <br>颜色名称<input type="text" name="colour" value="${sell.colour}">  <br>
+    库存<input type="text" name="repertory" value="${sell.repertory}"><br>
     维修项目
     <c:forEach items="${basicDataList}" var="b">
         <input type="radio" name="maintainProject" value="${b.id}" <c:if test="${sell.maintainProject == b.id}">checked</c:if> />${b.baseName}
     </c:forEach><br/>
         <input type="hidden" name="id" value="${sell.id}"><br>
+    <input type="hidden" name="isDel" value="${sell.isDel}"><br>
     <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="update()">修改</button>
 </form>
 </body>

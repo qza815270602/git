@@ -56,6 +56,7 @@
     价格<input type="text" name="sellPrice" id="sellPrice"/>
     <br>
     颜色<input type="text" name="colour" id="colour"><br>
+    库存<input type="text" name="repertory" ><br>
     维修项目
     <select name="maintainProject">
         <c:forEach var="b" items="${basicDataList}">
