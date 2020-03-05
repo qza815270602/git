@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2020-03-02 14:32:54
+Date: 2020-03-05 18:58:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,16 +53,18 @@ CREATE TABLE `maintain` (
   `status` int(11) NOT NULL COMMENT '处理状态 1 已提交  2已审核 3维修完成',
   `is_del` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of maintain
 -- ----------------------------
-INSERT INTO `maintain` VALUES ('1', '2020-02-29 19:23:35', 'DJ20200301145423865♦', '6', '3', '1');
-INSERT INTO `maintain` VALUES ('2', '2020-04-01 14:53:47', 'DJ20200301145423865♦', '6', '2', '1');
-INSERT INTO `maintain` VALUES ('3', '2020-03-15 15:05:02', 'DJ20200301150519124♦', '7', '4', '1');
-INSERT INTO `maintain` VALUES ('4', '2020-03-01 15:05:27', 'DJ20200301150533056♦', '9', '2', '1');
-INSERT INTO `maintain` VALUES ('5', '2020-03-03 09:17:15', 'DJ20200302091729626♦', '8', '3', '1');
+INSERT INTO `maintain` VALUES ('1', '2020-02-29 19:23:35', 'QQ20200301145423865♦', '6', '3', '1');
+INSERT INTO `maintain` VALUES ('2', '2020-04-01 14:53:47', 'QQ20200301145423865♦', '6', '2', '1');
+INSERT INTO `maintain` VALUES ('3', '2020-03-15 15:05:02', 'QQ20200301150519124♦', '7', '4', '1');
+INSERT INTO `maintain` VALUES ('4', '2020-03-01 15:05:27', 'QQ20200301150533056♦', '9', '4', '1');
+INSERT INTO `maintain` VALUES ('5', '2020-03-03 09:17:15', 'QQ20200302091729626♦', '8', '3', '1');
+INSERT INTO `maintain` VALUES ('6', '2020-03-11 14:28:51', 'QQ20200303142900806♦', '8', '2', '1');
+INSERT INTO `maintain` VALUES ('7', '2020-03-03 16:59:44', 'QQ20200303165953062♦', '7', '4', '1');
 
 -- ----------------------------
 -- Table structure for resource
@@ -199,16 +201,17 @@ CREATE TABLE `sell` (
   `colour` varchar(255) NOT NULL,
   `maintain_project` int(11) NOT NULL,
   `is_del` int(11) NOT NULL,
+  `repertory` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sell
 -- ----------------------------
-INSERT INTO `sell` VALUES ('7', '尖叫鸡', 'http://q6joiglti.bkt.clouddn.com/2544cb7bda8a41c8bbec6301a6b7f9c5', '6.50', '黄色', '9', '1');
-INSERT INTO `sell` VALUES ('8', '变形金刚', 'http://q6joiglti.bkt.clouddn.com/b282446247464a8398ceb8bf2ca83eca', '899.00', '黄色', '7', '1');
-INSERT INTO `sell` VALUES ('9', '木偶', 'http://q6joiglti.bkt.clouddn.com/8dd924a990e24afeb06de4b367d03a1b', '99.00', '绿色', '8', '1');
-INSERT INTO `sell` VALUES ('10', '棕熊', 'http://q6joiglti.bkt.clouddn.com/054b8ccfeb1e4f4390c18f2e9a368ebe', '199.00', '棕色', '10', '1');
+INSERT INTO `sell` VALUES ('14', '尖叫鸡', 'http://q6joiglti.bkt.clouddn.com/93a7cd631da24395be966e2a04f54ec8', '6.50', '黄色', '9', '1', '12');
+INSERT INTO `sell` VALUES ('15', '变形金刚', 'http://q6joiglti.bkt.clouddn.com/471105c9547640fabf28c2013aa9d063', '899.00', '黄色', '7', '1', '23');
+INSERT INTO `sell` VALUES ('16', '木偶', 'http://q6joiglti.bkt.clouddn.com/be69b3f8db0544a18c38ba86a79b0cc6', '199.00', '绿色', '8', '1', '0');
+INSERT INTO `sell` VALUES ('17', '棕熊', 'http://q6joiglti.bkt.clouddn.com/aba4a59c8501429fa1a8cb83e202a839', '199.00', '棕色', '10', '1', '31');
 
 -- ----------------------------
 -- Table structure for sell_user
@@ -217,14 +220,15 @@ DROP TABLE IF EXISTS `sell_user`;
 CREATE TABLE `sell_user` (
   `user_id` int(11) NOT NULL,
   `sell_id` int(11) NOT NULL,
-  `is_del` int(11) NOT NULL
+  `is_del` int(11) NOT NULL,
+  `count` int(11) NOT NULL COMMENT '数量'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sell_user
 -- ----------------------------
-INSERT INTO `sell_user` VALUES ('44', '10', '1');
-INSERT INTO `sell_user` VALUES ('44', '7', '1');
+INSERT INTO `sell_user` VALUES ('45', '17', '1', '2');
+INSERT INTO `sell_user` VALUES ('45', '15', '1', '2');
 
 -- ----------------------------
 -- Table structure for user
@@ -250,10 +254,10 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('44', '用户', 'zss', '29dab5f4fd115c3b4a9f30d644dc3fad', '1', '1', '13753713211', '3424235235@qq.com', '1', '2020-02-17 16:22:42', '2020-03-02 14:29:19', null, 'c692e7368fd802d8d7084fbd37dbf9f7');
-INSERT INTO `user` VALUES ('45', '管理员', 'bb', '92dc9fe492b93ef0d7704f627bfcdc6a', '1', '1', '15559330182', '815270602@qq.com', '1', '2020-02-17 16:23:13', '2020-03-02 14:06:18', null, '7fb3093e0fafd2a1f09b4bc60263e6e9');
-INSERT INTO `user` VALUES ('46', '商家', 'za', '74b68cf85d4bfe0aae96db6322b16b0a', '1', '1', '13934670753', '815270603@qq.com', '2', '2020-02-17 19:47:40', '2020-03-02 14:08:40', null, '9f2c403c8a88508efd3c80a9f49e140b');
-INSERT INTO `user` VALUES ('47', 'ww', 'www', '7341eed2c432071010e997bbf8fa64a3', '1', '1', '15812345678', '815270611@qq.com', '1', '2020-02-18 16:05:29', '2020-02-18 16:09:10', null, 'ab5850b563cba6f60da730ae41b374c8');
+INSERT INTO `user` VALUES ('44', '用户', 'zss', '29dab5f4fd115c3b4a9f30d644dc3fad', '1', '1', '13753713211', '3424235235@qq.com', '1', '2020-02-17 16:22:42', '2020-03-04 15:22:21', null, 'c692e7368fd802d8d7084fbd37dbf9f7');
+INSERT INTO `user` VALUES ('45', '管理员', 'bb', '92dc9fe492b93ef0d7704f627bfcdc6a', '1', '1', '15559330182', '815270604@qq.com', '1', '2020-02-17 16:23:13', '2020-03-05 15:26:02', null, '7fb3093e0fafd2a1f09b4bc60263e6e9');
+INSERT INTO `user` VALUES ('46', '商家', 'za', '74b68cf85d4bfe0aae96db6322b16b0a', '1', '1', '13934670753', '815270603@qq.com', '2', '2020-02-17 19:47:40', '2020-03-04 15:23:32', null, '9f2c403c8a88508efd3c80a9f49e140b');
+INSERT INTO `user` VALUES ('47', 'ww', 'www', '7341eed2c432071010e997bbf8fa64a3', '1', '1', '15812345678', '815270611@qq.com', '1', '2020-02-18 16:05:29', '2020-03-04 15:23:08', null, 'ab5850b563cba6f60da730ae41b374c8');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -271,7 +275,7 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` VALUES ('44', '1', '1');
 INSERT INTO `user_role` VALUES ('45', '2', '1');
 INSERT INTO `user_role` VALUES ('46', '3', '1');
-INSERT INTO `user_role` VALUES ('47', '2', '1');
+INSERT INTO `user_role` VALUES ('47', '1', '1');
 
 -- ----------------------------
 -- View structure for host_summary
